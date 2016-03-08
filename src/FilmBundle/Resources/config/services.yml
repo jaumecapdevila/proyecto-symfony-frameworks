@@ -8,7 +8,9 @@ services:
   edit.film:
         class: FilmBundle\Services\EditFilm
         arguments: ["@doctrine.orm.entity_manager"]
+  search.film:
+          class: FilmBundle\Services\SearchFilmById
+          arguments: ["@doctrine.orm.entity_manager"]
   remove.film:
           class: FilmBundle\Services\RemoveFilm
-          arguments: ["@doctrine.orm.entity_manager"]
-
+          arguments: ["@doctrine.orm.entity_manager","@search.film"]
