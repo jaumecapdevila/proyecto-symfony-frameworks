@@ -2,6 +2,13 @@ services:
   create.film:
     class: FilmBundle\Services\CreateFilm
     arguments: ["@doctrine.orm.entity_manager"]
-#    film.example:
-#        class: FilmBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+  list.films:
+      class: FilmBundle\Services\ListFilms
+      arguments: ["@doctrine.orm.entity_manager"]
+  edit.film:
+        class: FilmBundle\Services\EditFilm
+        arguments: ["@doctrine.orm.entity_manager"]
+  remove.film:
+          class: FilmBundle\Services\RemoveFilm
+          arguments: ["@doctrine.orm.entity_manager"]
+
