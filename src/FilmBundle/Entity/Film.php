@@ -2,6 +2,8 @@
 
 namespace FilmBundle\Entity;
 
+use DateTime;
+
 
 /**
  * Class Film
@@ -22,7 +24,7 @@ class Film
      * @param $date
      * @param $imdbUrl
      */
-    public function __construct($name, $year, $date, $imdbUrl)
+    public function __construct($name, $year, DateTime $date, $imdbUrl)
     {
         $this->name = $name;
         $this->year = $year;
@@ -46,9 +48,9 @@ class Film
     }
 
     /**
-     * @param mixed $date
+     * @param DateTime $date
      */
-    public function setDate($date)
+    public function setDate(DateTime $date)
     {
         $this->date = $date;
     }
