@@ -37,7 +37,7 @@ class ListFilmsCommand extends ContainerAwareCommand
         }
 
         $table = new Table($output);
-        $table->setStyle('bordeless');
+        $table->setStyle('borderless');
         $table
             ->setHeaders(['id', 'name', 'year', 'date', 'imdbUrl'])
             ->setRows($rows);
