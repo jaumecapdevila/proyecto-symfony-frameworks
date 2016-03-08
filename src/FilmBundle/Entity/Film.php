@@ -24,9 +24,40 @@ class Film
      */
     public function __construct($name, $year, $date, $imdbUrl)
     {
-        $this->name    = $name;
-        $this->year    = $year;
-        $this->date    = $date;
+        $this->name = $name;
+        $this->year = $year;
+        $this->date = $date;
+        $this->imdbUrl = $imdbUrl;
+    }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param mixed $year
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @param mixed $imdbUrl
+     */
+    public function setImdbUrl($imdbUrl)
+    {
         $this->imdbUrl = $imdbUrl;
     }
 
