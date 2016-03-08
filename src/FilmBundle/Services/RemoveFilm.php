@@ -19,7 +19,7 @@ class RemoveFilm
 
     public function __invoke($id)
     {
-        $film = $this->searchFilmByIdService($id);
+        $film = call_user_func($this->searchFilmByIdService, $id);
         $this->entityManager->remove($film);
         $this->entityManager->flush();
     }
