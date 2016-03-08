@@ -16,7 +16,7 @@ class CreateFilmCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('films:create')
+            ->setName('film:create')
             ->setDescription('Create a new film')
             ->addArgument(
                 'name',

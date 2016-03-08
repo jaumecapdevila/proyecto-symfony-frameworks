@@ -15,7 +15,7 @@ class ListFilmsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('films:list')
+            ->setName('film:list')
             ->setDescription('List all films');
     }
 
