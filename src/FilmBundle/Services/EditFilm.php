@@ -25,7 +25,7 @@ class EditFilm
                 'No product found for id '.$filmId
             );
         }
-        
+
         $filmToModify->setName($editedFilm->getName());
         $filmToModify->setDate($editedFilm->getDate());
         $filmToModify->setYear($editedFilm->getYear());
