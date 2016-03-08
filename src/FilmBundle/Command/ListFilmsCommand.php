@@ -6,6 +6,7 @@ namespace FilmBundle\Command;
 use FilmBundle\Entity\Film;
 use FilmBundle\Services\ListFilms;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,26 +24,30 @@ class ListFilmsCommand extends ContainerAwareCommand
     {
         /** @var ListFilms $listFilms */
         $listFilms = $this->getContainer()->get('list.films');
-        $allFilms  = $listFilms();
-        $rows      = [];
-        /** @var Film $film */
-        foreach ($allFilms as $film) {
-            $rows[] = [
-                $film->getId(),
-                $film->getName(),
-                $film->getYear(),
-                $film->getDate()->format('d/m/Y'),
-                $film->getImdbUrl()
-            ];
-        }
+        try {
+            $allFilms = $listFilms();
+            $rows     = [];
+            /** @var Film $film */
+            foreach ($allFilms as $film) {
+                $rows[] = [
+                    $film->getId(),
+                    $film->getName(),
+                    $film->getYear(),
+                    $film->getDate()->format('d/m/Y'),
+                    $film->getImdbUrl()
+                ];
+            }
 
-        $table = new Table($output);
-        $table->setStyle('borderless');
-        $table
-            ->setHeaders(['id', 'name', 'year', 'date', 'imdbUrl'])
-            ->setRows($rows);
-        ;
-        $table->render();
+            $table = new Table($output);
+            $table->setStyle('borderless');
+            $table
+                ->setHeaders(['id', 'name', 'year', 'date', 'imdbUrl'])
+                ->setRows($rows);;
+            $table->render();
+        } catch (Exception $e) {
+            $text = "<fg=red>There are currently no films to list</>";
+            $output->writeln($text);
+        }
     }
 }
 
