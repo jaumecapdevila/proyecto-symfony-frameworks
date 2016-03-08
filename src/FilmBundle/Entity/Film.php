@@ -17,15 +17,13 @@ class Film
 
     /**
      * Film constructor.
-     * @param $id
      * @param $name
      * @param $year
      * @param $date
      * @param $imdbUrl
      */
-    public function __construct($id, $name, $year, $date, $imdbUrl)
+    public function __construct($name, $year, $date, $imdbUrl)
     {
-        $this->id      = $id;
         $this->name    = $name;
         $this->year    = $year;
         $this->date    = $date;
