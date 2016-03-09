@@ -14,8 +14,7 @@ class CreateFilmController extends Controller
 {
     public function createAction(Request $request)
     {
-        $filmJson = '{"name":"Inglourious Basterds","year":2009,"date":"19/07/2009","url":"http://www.imdb.com/title/tt0361748/?ref_=fn_al_tt_1"}';
-        $filmInfo  = json_decode($filmJson,true);
+        $filmInfo  = json_decode($request->getContent(),true);
 
         $date = DateTime::createFromFormat('d/m/Y',$filmInfo["date"]);
 
