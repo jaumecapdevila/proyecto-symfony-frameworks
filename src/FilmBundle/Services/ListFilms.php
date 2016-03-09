@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 
 
-class ListFilms
+class ListFilms implements ListFilmsInterface
 {
     private $entityManager;
     private $eventDispatcher;
