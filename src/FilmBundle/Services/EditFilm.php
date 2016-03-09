@@ -5,6 +5,8 @@ namespace FilmBundle\Services;
 use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use CacheBundle\EventListener\FilmEdited;
 
 class EditFilm
 {
@@ -34,6 +36,11 @@ class EditFilm
         $film->setImdbUrl($editedFilm->getImdbUrl());
 
         $this->entityManager->flush($film);
+
+        $listener = new FilmEdited();
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addListener('film.edited', array($listener, 'removeCacheAfterFilmEdited'));
+
     }
 
 }

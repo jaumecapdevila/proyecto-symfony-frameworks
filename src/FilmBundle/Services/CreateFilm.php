@@ -4,6 +4,8 @@ namespace FilmBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
+use CacheBundle\EventListener\FilmAdded;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CreateFilm
 {
@@ -18,5 +20,10 @@ class CreateFilm
     {
         $this->entityManager->persist($film);
         $this->entityManager->flush($film);
+
+        $listener = new FilmAdded();
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addListener('film.added', array($listener, 'removeCacheAfterFilmAdded'));
     }
 }
+
