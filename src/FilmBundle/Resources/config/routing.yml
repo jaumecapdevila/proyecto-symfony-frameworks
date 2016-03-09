@@ -17,4 +17,6 @@ film_remove:
     path:     /film/{id}
     defaults: { _controller: FilmBundle:RemoveFilm:remove }
     methods: [DELETE]
-
+client:
+    path:     /client
+    defaults: { _controller: FilmBundle:Client:client }

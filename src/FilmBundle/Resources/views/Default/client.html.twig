@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FilmApi Client</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var film1 = {
+                "name": "Inglourious Basterds",
+                "year": 2009,
+                "date": "19/07/2009",
+                "url": "http://www.imdb.com/title/tt0361748/?ref_=fn_al_tt_1"
+            };
+            var film2 = {
+                "name": "Iron Man",
+                "year": 2008,
+                "date": "30/04/2008",
+                "url": "http://www.imdb.com/title/tt0371746/?ref_=nv_sr_2"
+            };
+
+            function list() {
+
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = onStateChange;
+                request.open('GET', window.location.origin + '/app_dev.php/film');
+                request.setRequestHeader("Accept", "application/json");
+                request.send();
+
+                function onStateChange() {
+                    if (request.readyState < 4) {
+                        return;
+                    }
+                    if (request.status < 200 || request.status >= 300) {
+                        console.error('Request error', request);
+                        return;
+                    }
+
+                    console.log(JSON.parse(request.responseText));
+                }
+
+            }
+
+            function remove(id) {
+
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = onStateChange;
+                request.open('DELETE', window.location.origin + '/app_dev.php/film/' + id);
+                request.setRequestHeader("Accept", "application/json");
+                request.send();
+
+                function onStateChange() {
+                    if (request.readyState < 4) {
+                        return;
+                    }
+                    if (request.status < 200 || request.status >= 300) {
+                        console.error('Request error', request);
+                        return;
+                    }
+
+                    console.log(JSON.parse(request.responseText));
+                }
+
+            }
+
+            function create(film) {
+
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = onStateChange;
+                request.open('POST', window.location.origin + '/app_dev.php/film');
+                request.setRequestHeader("Accept", "application/json");
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(JSON.stringify(film));
+
+                function onStateChange() {
+                    if (request.readyState < 4) {
+                        return;
+                    }
+                    if (request.status < 200 || request.status >= 300) {
+                        console.error('Request error', request);
+                        return;
+                    }
+
+                    console.log(JSON.parse(request.responseText));
+                }
+
+            }
+
+            function edit(film) {
+
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = onStateChange;
+                request.open('PUT', window.location.origin + '/app_dev.php/film/' + film.id);
+                request.setRequestHeader("Accept", "application/json");
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(JSON.stringify(film));
+
+                function onStateChange() {
+                    if (request.readyState < 4) {
+                        return;
+                    }
+                    if (request.status < 200 || request.status >= 300) {
+                        console.error('Request error', request);
+                        return;
+                    }
+
+                    console.log(JSON.parse(request.responseText));
+                }
+
+            }
+
+            console.log("Available functions:", {'list': list, 'remove': remove, 'create': create, 'edit': edit});
+            console.log("Available films:", {'film1': film1, 'film2': film2});
+        </script>
+    </body>
+</html>
