@@ -1,3 +1,7 @@
+cache:
+    resource: "@CacheBundle/Resources/config/routing.yml"
+    prefix:   /
+
 film:
     resource: "@FilmBundle/Resources/config/routing.yml"
     prefix:   /

@@ -9,6 +9,6 @@ class FilmsListed
 {
     public function addFilmsListToCache(Event $event)
     {
-        echo "Cache";
+        file_put_contents("/tmp/cache.test", "Cache");
     }
 }
