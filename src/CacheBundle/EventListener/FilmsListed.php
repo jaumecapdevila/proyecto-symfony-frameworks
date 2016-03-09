@@ -3,12 +3,20 @@
 
 namespace CacheBundle\EventListener;
 
+use CacheBundle\Services\FilmsCacher;
 use Symfony\Component\EventDispatcher\Event;
 
 class FilmsListed
 {
-    public function addFilmsListToCache(Event $event)
+    private $filmsCacher;
+
+    public function __construct(FilmsCacher $filmsCacher)
     {
-        file_put_contents("/tmp/cache.test", "Cache");
+        $this->filmsCacher = $filmsCacher;
+    }
+
+    public function addFilmsListToCache()
+    {
+        $this->filmsCacher->createCache();
     }
 }
