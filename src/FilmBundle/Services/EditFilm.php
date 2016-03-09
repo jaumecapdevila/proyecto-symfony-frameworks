@@ -6,17 +6,19 @@ use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use CacheBundle\EventListener\FilmEdited;
+use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 
 class EditFilm
 {
     private $entityManager;
     private $searchFilmByIdService;
+    private $eventDispatcher;
 
-    public function __construct(EntityManager $entityManager, SearchFilmById $searchFilmById)
+    public function __construct(EntityManager $entityManager, SearchFilmById $searchFilmById, TraceableEventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->searchFilmByIdService = $searchFilmById;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(Film $editedFilm)
@@ -37,10 +39,7 @@ class EditFilm
 
         $this->entityManager->flush($film);
 
-        $listener = new FilmEdited();
-        $dispatcher = new EventDispatcher();
-        $dispatcher->addListener('film.edited', array($listener, 'removeCacheAfterFilmEdited'));
-
+        $this->eventDispatcher->dispatch('film.edited');
     }
 
 }

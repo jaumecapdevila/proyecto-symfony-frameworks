@@ -8,6 +8,6 @@ class FilmAdded
 {
     public function removeCacheAfterFilmAdded(Event $event)
     {
-
+        echo "Film added listener";
     }
 }

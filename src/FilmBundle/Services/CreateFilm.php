@@ -21,5 +21,6 @@ class CreateFilm
     {
         $this->entityManager->persist($film);
         $this->entityManager->flush($film);
+        $this->eventDispatcher->dispatch('films.added');
     }
 }
