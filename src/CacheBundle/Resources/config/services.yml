@@ -19,3 +19,8 @@ services:
   films.cacher:
     class: CacheBundle\Services\FilmsCacher
     arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
+  list.films.cache:
+    class: CacheBundle\Services\ListFilmsFromCache
+    decorates: list.films
+    decoration_inner_name: list.films.simple
+    arguments: ["@list.films.simple"]
