@@ -14,16 +14,17 @@ class ListFilmsController extends Controller
     {
         /** @var ListFilms $listFilms */
         $listFilms = $this->get('list.films');
+        /** @var ListFilms $listFilms */
         $allFilms = $listFilms();
         $rows     = [];
         /** @var Film $film */
         foreach ($allFilms as $film) {
             $rows[] = [
-                $film->getId(),
-                $film->getName(),
-                $film->getYear(),
-                $film->getDate()->format('d/m/Y'),
-                $film->getImdbUrl()
+                "id" => $film->getId(),
+                "name" => $film->getName(),
+                "year" => $film->getYear(),
+                "date" => $film->getDate()->format('d/m/Y'),
+                "imdbUrl" => $film->getImdbUrl()
             ];
         }
         $response = new Response();
