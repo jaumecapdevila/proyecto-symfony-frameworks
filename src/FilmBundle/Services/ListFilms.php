@@ -6,16 +6,18 @@ use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use CacheBundle\EventListener\FilmsListed;
+use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 
 
 class ListFilms
 {
     private $entityManager;
+    private $eventDispatcher;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, TraceableEventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
     public function __invoke()
     {
@@ -26,9 +28,7 @@ class ListFilms
               '0 films found'
             );
         }
-        $listener = new FilmsListed();
-        $dispatcher = new EventDispatcher();
-        $dispatcher->addListener('films.listed', array($listener, 'addFilmsListToCache'));
+        $this->eventDispatcher->dispatch('films.listed');
 
         return $filmList;
     }
