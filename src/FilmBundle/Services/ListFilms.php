@@ -5,6 +5,9 @@ namespace FilmBundle\Services;
 use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use CacheBundle\EventListener\FilmsListed;
+
 
 class ListFilms
 {
@@ -23,6 +26,9 @@ class ListFilms
               '0 films found'
             );
         }
+        $listener = new FilmsListed();
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addListener('films.listed', array($listener, 'addFilmsListToCache'));
 
         return $filmList;
     }

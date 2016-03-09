@@ -4,6 +4,19 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  films.listed.listener:
+     class: CacheBundle\EventListener\FilmsListed
+     tags:
+        - { name: kernel.event_listener, event: films.listed, method: addFilmsListToCache}
+  film.edited.listener:
+      class: CacheBundle\EventListener\FilmEdited
+      tags:
+        - { name: kernel.event_listener, event: film.edited, method: removeCacheAfterFilmEdited}
+  film.removed.listener:
+      class: CacheBundle\EventListener\FilmRemoved
+      tags:
+        - { name: kernel.event_listener, event: film.removed, method: removeCacheAfterFilmRemoved}
+  film.added.listener:
+      class: CacheBundle\EventListener\FilmAdded
+      tags:
+        - { name: kernel.event_listener, event: film.added, method: removeCacheAfterFilmAdded}
