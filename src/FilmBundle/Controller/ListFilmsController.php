@@ -12,6 +12,7 @@ class ListFilmsController extends Controller
 {
     public function listAction(Request $request)
     {
+        /** @var ListFilms $listFilms */
         $listFilms = $this->get('list.films');
         $allFilms = $listFilms();
         $rows     = [];

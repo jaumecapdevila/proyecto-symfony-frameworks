@@ -3,6 +3,7 @@
 namespace FilmBundle\Controller;
 
 use DateTime;
+use FilmBundle\Services\CreateFilm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class CreateFilmController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         try {
+            /** @var CreateFilm $createFilm */
             $createFilm($film);
             $filmId = $film->getId();
             $response->setContent('{"message":"Film created","id":'.$filmId.'}');

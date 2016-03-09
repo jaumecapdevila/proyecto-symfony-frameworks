@@ -7,7 +7,7 @@ services:
       arguments: ["@doctrine.orm.entity_manager"]
   edit.film:
         class: FilmBundle\Services\EditFilm
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager","@search.film"]
   search.film:
           class: FilmBundle\Services\SearchFilmById
           arguments: ["@doctrine.orm.entity_manager"]

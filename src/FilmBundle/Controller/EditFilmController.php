@@ -3,6 +3,7 @@
 namespace FilmBundle\Controller;
 
 use DateTime;
+use FilmBundle\Services\EditFilm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FilmBundle\Entity\Film;
@@ -25,6 +26,7 @@ class EditFilmController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         try {
+            /** @var EditFilm $editFilm */
             $editFilm($editedFilm);
             $response->setContent('{"message":"Film edited"}');
 

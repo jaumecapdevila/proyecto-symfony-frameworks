@@ -9,29 +9,31 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class EditFilm
 {
     private $entityManager;
+    private $searchFilmByIdService;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, SearchFilmById $searchFilmById)
     {
         $this->entityManager = $entityManager;
+        $this->searchFilmByIdService = $searchFilmById;
     }
 
     public function __invoke(Film $editedFilm)
     {
         $filmId = $editedFilm->getId();
-        $filmToModify = $this->entityManager->getRepository('FilmBundle:Film')->find($filmId);
+        $film = call_user_func($this->searchFilmByIdService, $filmId);
 
-        if (!$filmToModify) {
+        if (!$film) {
             throw new Exception(
                 'No product found for id '.$filmId
             );
         }
 
-        $filmToModify->setName($editedFilm->getName());
-        $filmToModify->setDate($editedFilm->getDate());
-        $filmToModify->setYear($editedFilm->getYear());
-        $filmToModify->setImdbUrl($editedFilm->getImdbUrl());
+        $film->setName($editedFilm->getName());
+        $film->setDate($editedFilm->getDate());
+        $film->setYear($editedFilm->getYear());
+        $film->setImdbUrl($editedFilm->getImdbUrl());
 
-        $this->entityManager->flush($filmToModify);
+        $this->entityManager->flush($film);
     }
 
 }
