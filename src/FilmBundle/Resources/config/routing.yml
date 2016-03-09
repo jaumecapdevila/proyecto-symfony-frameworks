@@ -4,17 +4,17 @@ film_homepage:
 film_create:
     path:     /film
     defaults: { _controller: FilmBundle:CreateFilm:index }
-    methods: [PUT]
+    methods: [POST]
 film_list:
     path:     /film
     defaults: { _controller: FilmBundle:ListFilms:index }
     methods: [GET]
 film_edit:
-    path:     /edit/{id}/film
+    path:     /film/{id}
     defaults: { _controller: FilmBundle:EditFilm:edit }
     methods: [PUT]
 film_remove:
-    path:     /remove/{id}/film
+    path:     /film/{id}
     defaults: { _controller: FilmBundle:RemoveFilm:remove }
     methods: [DELETE]
 
