@@ -3,11 +3,11 @@ film_homepage:
     defaults: { _controller: FilmBundle:Default:index }
 film_create:
     path:     /film
-    defaults: { _controller: FilmBundle:CreateFilm:index }
+    defaults: { _controller: FilmBundle:CreateFilm:create }
     methods: [POST]
 film_list:
     path:     /film
-    defaults: { _controller: FilmBundle:ListFilms:index }
+    defaults: { _controller: FilmBundle:ListFilms:list }
     methods: [GET]
 film_edit:
     path:     /film/{id}

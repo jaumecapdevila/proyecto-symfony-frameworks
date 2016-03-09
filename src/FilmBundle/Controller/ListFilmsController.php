@@ -10,7 +10,7 @@ use FilmBundle\Services\ListFilms;
 
 class ListFilmsController extends Controller
 {
-    public function indexAction(Request $request)
+    public function listAction(Request $request)
     {
         $listFilms = $this->get('list.films');
         $allFilms = $listFilms();
