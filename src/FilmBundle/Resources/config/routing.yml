@@ -9,4 +9,12 @@ film_list:
     path:     /film
     defaults: { _controller: FilmBundle:ListFilms:index }
     methods: [GET]
+film_edit:
+    path:     /edit/{id}/film
+    defaults: { _controller: FilmBundle:EditFilm:edit }
+    methods: [PUT]
+film_remove:
+    path:     /remove/{id}/film
+    defaults: { _controller: FilmBundle:RemoveFilm:remove }
+    methods: [DELETE]
 
