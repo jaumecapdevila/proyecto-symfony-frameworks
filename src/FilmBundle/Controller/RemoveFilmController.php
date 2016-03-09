@@ -20,7 +20,7 @@ class RemoveFilmController extends Controller
         try {
             /** @var RemoveFilm $removeFilm */
             $removeFilm($id);
-            $response->setContent('{"message":"OK"');
+            $response->setContent('{"message":"OK"}');
         } catch (Exception $e) {
             $response->setContent('{"message":"Film doesn\'t exist"}');
         }
