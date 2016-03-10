@@ -6,7 +6,7 @@ namespace CacheBundle\EventListener;
 use CacheBundle\Services\FilmsCacher;
 use Symfony\Component\EventDispatcher\Event;
 
-class FilmsListed
+class FilmsListUpdated
 {
     private $filmsCacher;
 
@@ -15,7 +15,7 @@ class FilmsListed
         $this->filmsCacher = $filmsCacher;
     }
 
-    public function addFilmsListToCache()
+    public function updateFilmsListCache()
     {
         $this->filmsCacher->createCache();
     }

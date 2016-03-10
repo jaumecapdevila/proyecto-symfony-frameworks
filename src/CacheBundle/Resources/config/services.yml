@@ -1,21 +1,12 @@
 services:
-  films.listed.listener:
-    class: CacheBundle\EventListener\FilmsListed
+  films.list.uptaded.listener:
+    class: CacheBundle\EventListener\FilmsListUpdated
     arguments: [ "@films.cacher" ]
     tags:
-      - { name: kernel.event_listener, event: films.listed, method: addFilmsListToCache}
-  film.edited.listener:
-    class: CacheBundle\EventListener\FilmEdited
-    tags:
-      - { name: kernel.event_listener, event: film.edited, method: removeCacheAfterFilmEdited}
-  film.removed.listener:
-    class: CacheBundle\EventListener\FilmRemoved
-    tags:
-      - { name: kernel.event_listener, event: film.removed, method: removeCacheAfterFilmRemoved}
-  film.added.listener:
-    class: CacheBundle\EventListener\FilmAdded
-    tags:
-      - { name: kernel.event_listener, event: film.added, method: removeCacheAfterFilmAdded}
+      - { name: kernel.event_listener, event: films.listed, method: updateFilmsListCache}
+      - { name: kernel.event_listener, event: film.edited, method: updateFilmsListCache}
+      - { name: kernel.event_listener, event: film.removed, method: updateFilmsListCache}
+      - { name: kernel.event_listener, event: film.added, method: updateFilmsListCache}
   films.cacher:
     class: CacheBundle\Services\FilmsCacher
     arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
