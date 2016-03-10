@@ -30,7 +30,7 @@ class EditFilmController extends Controller
             $response->setContent('{"message":"Film edited"}');
 
         } catch (Exception $e) {
-            $response->setContent('{"message":"An error has ocurred while editting the new film"}');
+            $response->setContent('{"message":"An error has ocurred while editting the film"}');
         }
 
         return $response;
