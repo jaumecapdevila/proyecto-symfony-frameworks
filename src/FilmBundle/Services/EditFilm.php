@@ -5,8 +5,7 @@ namespace FilmBundle\Services;
 use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EditFilm
 {
@@ -14,7 +13,10 @@ class EditFilm
     private $searchFilmByIdService;
     private $eventDispatcher;
 
-    public function __construct(EntityManager $entityManager, SearchFilmById $searchFilmById, TraceableEventDispatcher $eventDispatcher)
+    public function __construct(
+        EntityManager $entityManager,
+        SearchFilmById $searchFilmById,
+        EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->searchFilmByIdService = $searchFilmById;

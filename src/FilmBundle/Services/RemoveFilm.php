@@ -3,10 +3,8 @@
 namespace FilmBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use FilmBundle\Entity\Film;
 use CacheBundle\EventListener\FilmRemoved;
-use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class RemoveFilm
 {
@@ -15,7 +13,10 @@ class RemoveFilm
     private $searchFilmByIdService;
     private $eventDispatcher;
 
-    public function __construct(EntityManager $entityManager, SearchFilmById $searchFilmById, TraceableEventDispatcher $eventDispatcher)
+    public function __construct(
+        EntityManager $entityManager, 
+        SearchFilmById $searchFilmById,
+        EventDispatcherInterface $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->searchFilmByIdService = $searchFilmById;
