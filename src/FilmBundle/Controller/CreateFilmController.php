@@ -2,6 +2,8 @@
 
 namespace FilmBundle\Controller;
 
+use DateTime;
+use FilmBundle\Entity\Command\CreateFilmCommand;
 use FilmBundle\Services\CreateFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,13 +14,19 @@ class CreateFilmController extends Controller
 {
     public function createAction(Request $request)
     {
-        $film = $this->get('create.film.from.request')->createNewFilmFromRequest($request);
         $response = new JsonResponse();
-        $createFilm = $this->get('create.film');
+        $filmInfo  = json_decode($request->getContent(),true);
+        $createFilmUseCase = $this->get('create.film');
+        $createFilmCommand = new CreateFilmCommand(
+            $filmInfo["name"],
+            $filmInfo["year"],
+            $filmInfo["date"],
+            $filmInfo["url"]
+        );
         try {
-            /** @var CreateFilmUseCase $createFilm */
-            $createFilm($film);
-            $filmId = $film->getId();
+            /** @var CreateFilmUseCase $createFilmUseCase */
+            $newFilm = $createFilmUseCase($createFilmCommand);
+            $filmId = $newFilm->getId();
             $response->setContent('{"message":"Film created","id":'.$filmId.'}');
         } catch (Exception $e) {
             $response->setContent('{"message":"An error has ocurred while adding the new film"}');

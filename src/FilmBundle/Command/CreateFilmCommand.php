@@ -3,8 +3,8 @@
 namespace FilmBundle\Command;
 
 
-use DateTime;
-use FilmBundle\Entity\Film;
+use Exception;
+use FilmBundle\Entity\Command\CreateFilmCommand as CommandCreateFilm;
 use FilmBundle\Services\CreateFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,18 +43,23 @@ class CreateFilmCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        $year = $input->getArgument('year');
-        $date = DateTime::createFromFormat('d/m/Y', $input->getArgument('date'));
+        $name    = $input->getArgument('name');
+        $year    = $input->getArgument('year');
+        $date    = $input->getArgument('date');
         $imdbURL = $input->getArgument('imdbUrl');
 
-        $film = new Film($name, $year, $date, $imdbURL);
-        /** @var CreateFilmUseCase $createFilm */
-        $createFilm = $this->getContainer()->get('create.film');
-        $createFilm($film);
-        $filmId = $film->getId();
+        $createFilmCommand = new CommandCreateFilm($name, $year, $date, $imdbURL);
 
-        $text = "<fg=green>Film <fg=white>'$name'</> successfully created with id = <fg=white>$filmId</></>";
+        /** @var CreateFilmUseCase $createFilmUseCase */
+        try {
+            $createFilmUseCase = $this->getContainer()->get('create.film');
+            $film              = $createFilmUseCase($createFilmCommand);
+            $filmId            = $film->getId();
+
+            $text = "<fg=green>Film <fg=white>'$name'</> successfully created with id = <fg=white>$filmId</></>";
+        } catch (Exception $e) {
+            $text = "<fg=red>An error has ocurred while adding the new film</>";
+        }
         $output->writeln($text);
     }
 }
