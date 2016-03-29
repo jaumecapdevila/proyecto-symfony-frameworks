@@ -14,13 +14,9 @@ class EditFilmController extends Controller
 {
     public function editAction(Request $request, $id)
     {
-        $filmInfo = json_decode($request->getContent(), true);
-
-        $date = DateTime::createFromFormat('d/m/Y', $filmInfo["date"]);
-        $editedFilm = new Film($filmInfo["name"], $filmInfo["year"], $date, $filmInfo["url"]);
+        $editedFilm = $this->get('create.film.from.request')->CreateNewFilmFromRequest($request);
         $editedFilm->setId($id);
         $editFilm = $this->get('edit.film');
-
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
 
