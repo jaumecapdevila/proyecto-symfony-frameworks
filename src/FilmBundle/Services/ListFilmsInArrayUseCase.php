@@ -3,7 +3,7 @@
 namespace FilmBundle\Services;
 
 
-class CreateFilmList
+class ListFilmsInArrayUseCase
 {
     private $row;
 
@@ -12,7 +12,7 @@ class CreateFilmList
         $this->row = [];
     }
 
-    public function createFilmList($filmsList)
+    public function createArrayList($filmsList)
     {
         foreach ($filmsList as $film) {
             $this->row[] = [
