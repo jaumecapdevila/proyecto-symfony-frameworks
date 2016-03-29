@@ -14,3 +14,6 @@ services:
   remove.film:
     class: FilmBundle\Services\RemoveFilm
     arguments: ["@doctrine.orm.entity_manager", "@search.film","@event_dispatcher"]
+  create.film.from.request:
+      class: FilmBundle\Services\CreateFilmFromRequest
+      arguments: []
