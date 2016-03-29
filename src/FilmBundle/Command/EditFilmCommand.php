@@ -5,7 +5,8 @@ namespace FilmBundle\Command;
 
 use DateTime;
 use FilmBundle\Entity\Film;
-use FilmBundle\Services\EditFilm;
+use FilmBundle\Entity\Command\EditFilmCommand as CommandEditFilm;
+use FilmBundle\Services\EditFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
@@ -51,16 +52,16 @@ class EditFilmCommand extends ContainerAwareCommand
         $id         = $input->getArgument('id');
         $name       = $input->getArgument('name');
         $year       = $input->getArgument('year');
-        $date       = DateTime::createFromFormat('d/m/Y', $input->getArgument('date'));
+        $date       = $input->getArgument('date');
         $imdbURL    = $input->getArgument('imdbUrl');
-        $editedFilm = new Film($name, $year, $date, $imdbURL);
-        $editedFilm->setId($id);
 
-        /** @var EditFilm $editFilm */
-        $editFilm   = $this->getContainer()->get('edit.film');
+        $editFilmCommand = new CommandEditFilm($id, $name, $year, $date, $imdbURL);
+
+        /** @var EditFilmUseCase $editFilmUseCase */
+        $editFilmUseCase = $this->getContainer()->get('edit.film');
 
         try {
-            $editFilm($editedFilm);
+            $editFilmUseCase($editFilmCommand);
             $text = "<fg=green>Film with id = <fg=white>$id</> successfully edited</>";
         } catch (Exception $e) {
             $text = "<fg=red>The film with id = <fg=white>$id</> does not exist</>";

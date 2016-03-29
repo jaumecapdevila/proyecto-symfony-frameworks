@@ -6,7 +6,7 @@ services:
     class: FilmBundle\Services\ListFilms
     arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
   edit.film:
-    class: FilmBundle\Services\EditFilm
+    class: FilmBundle\Services\EditFilmUseCase
     arguments: ["@doctrine.orm.entity_manager", "@search.film", "@event_dispatcher"]
   search.film:
     class: FilmBundle\Services\SearchFilmById
