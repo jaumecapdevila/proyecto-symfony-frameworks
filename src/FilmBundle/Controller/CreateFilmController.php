@@ -12,7 +12,7 @@ class CreateFilmController extends Controller
 {
     public function createAction(Request $request)
     {
-        $film = $this->get('create.film.from.request')->CreateNewFilmFromRequest($request);
+        $film = $this->get('create.film.from.request')->createNewFilmFromRequest($request);
         $response = new JsonResponse();
         $createFilm = $this->get('create.film');
         try {
