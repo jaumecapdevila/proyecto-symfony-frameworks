@@ -17,3 +17,6 @@ services:
   create.film.from.request:
       class: FilmBundle\Services\CreateFilmFromRequest
       arguments: []
+  create.film.list:
+        class: FilmBundle\Services\CreateFilmList
+        arguments: []

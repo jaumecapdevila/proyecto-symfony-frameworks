@@ -19,21 +19,8 @@ class ListFilmsController extends Controller
             $listFilms = $this->get('list.films');
             /** @var ListFilms $listFilms */
             $allFilms = $listFilms();
-            $rows     = [];
-            /** @var Film $film */
-            foreach ($allFilms as $film) {
-                $rows[] = [
-                    "id" => $film->getId(),
-                    "name" => $film->getName(),
-                    "year" => $film->getYear(),
-                    "date" => $film->getDate()->format('d/m/Y'),
-                    "imdbUrl" => $film->getImdbUrl()
-                ];
-            }
-            $response = new Response();
-            $response->headers->set('Content-Type', 'application/json');
-            $response->setContent(json_encode($rows));
-
+            $films = $this->get('create.film.list')->createFilmList($allFilms);
+            $response = new JsonResponse($films);
             return $response;
         } catch (Exception $e) {
             return new JsonResponse([]);
