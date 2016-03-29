@@ -5,7 +5,7 @@ namespace FilmBundle\Command;
 
 use DateTime;
 use FilmBundle\Entity\Film;
-use FilmBundle\Services\CreateFilm;
+use FilmBundle\Services\CreateFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,7 +49,7 @@ class CreateFilmCommand extends ContainerAwareCommand
         $imdbURL = $input->getArgument('imdbUrl');
 
         $film = new Film($name, $year, $date, $imdbURL);
-        /** @var CreateFilm $createFilm */
+        /** @var CreateFilmUseCase $createFilm */
         $createFilm = $this->getContainer()->get('create.film');
         $createFilm($film);
         $filmId = $film->getId();

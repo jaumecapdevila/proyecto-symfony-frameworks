@@ -2,7 +2,7 @@
 
 namespace FilmBundle\Controller;
 
-use FilmBundle\Services\CreateFilm;
+use FilmBundle\Services\CreateFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +16,7 @@ class CreateFilmController extends Controller
         $response = new JsonResponse();
         $createFilm = $this->get('create.film');
         try {
-            /** @var CreateFilm $createFilm */
+            /** @var CreateFilmUseCase $createFilm */
             $createFilm($film);
             $filmId = $film->getId();
             $response->setContent('{"message":"Film created","id":'.$filmId.'}');

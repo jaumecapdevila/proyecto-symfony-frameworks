@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use FilmBundle\Entity\Film;
 use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 
-class CreateFilm
+class CreateFilmUseCase
 {
     private $entityManager;
     private $eventDispatcher;
