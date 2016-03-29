@@ -1,6 +1,6 @@
 services:
   create.film:
-    class: FilmBundle\Services\CreateFilm
+    class: FilmBundle\Services\CreateFilmUseCase
     arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
   list.films:
     class: FilmBundle\Services\ListFilms
