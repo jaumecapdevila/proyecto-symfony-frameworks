@@ -14,9 +14,6 @@ services:
   remove.film:
     class: FilmBundle\Services\RemoveFilm
     arguments: ["@doctrine.orm.entity_manager", "@search.film","@event_dispatcher"]
-  create.film.from.request:
-      class: FilmBundle\Services\CreateFilmFromRequest
-      arguments: []
-  create.film.list:
-        class: FilmBundle\Services\CreateFilmList
-        arguments: []
+  list.films.array:
+    class: FilmBundle\Services\ListFilmsInArrayUseCase
+    arguments: ["@list.films"]

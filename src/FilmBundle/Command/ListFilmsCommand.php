@@ -4,7 +4,7 @@ namespace FilmBundle\Command;
 
 
 use FilmBundle\Entity\Film;
-use FilmBundle\Services\ListFilms;
+use FilmBundle\Services\ListFilmsInArrayUseCase;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Helper\Table;
@@ -22,29 +22,18 @@ class ListFilmsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ListFilms $listFilms */
-        $listFilms = $this->getContainer()->get('list.films');
-        try {
-            $allFilms = $listFilms();
-            $rows     = [];
-            /** @var Film $film */
-            foreach ($allFilms as $film) {
-                $rows[] = [
-                    $film->getId(),
-                    $film->getName(),
-                    $film->getYear(),
-                    $film->getDate()->format('d/m/Y'),
-                    $film->getImdbUrl()
-                ];
-            }
+        /** @var ListFilmsInArrayUseCase $listFilmsInArrayUseCase */
+        $listFilmsInArrayUseCase = $this->getContainer()->get('list.films.array');
+        $filmsArray = $listFilmsInArrayUseCase();
 
+        if (!empty($filmsArray)) {
             $table = new Table($output);
             $table->setStyle('borderless');
             $table
                 ->setHeaders(['id', 'name', 'year', 'date', 'imdbUrl'])
-                ->setRows($rows);;
+                ->setRows($filmsArray);;
             $table->render();
-        } catch (Exception $e) {
+        } else {
             $text = "<fg=red>There are currently no films to list</>";
             $output->writeln($text);
         }

@@ -5,17 +5,19 @@ namespace FilmBundle\Services;
 
 class ListFilmsInArrayUseCase
 {
-    private $row;
-
-    public function __construct()
+    private $arrayList = [];
+    private $listFilmsService;
+    
+    public function __construct(ListFilmsInterface $listFilms)
     {
-        $this->row = [];
+        $this->listFilmsService = $listFilms;
     }
 
-    public function createArrayList($filmsList)
+    public function __invoke()
     {
+        $filmsList = call_user_func($this->listFilmsService);
         foreach ($filmsList as $film) {
-            $this->row[] = [
+            $this->arrayList[] = [
                 "id" => $film->getId(),
                 "name" => $film->getName(),
                 "year" => $film->getYear(),
@@ -24,7 +26,7 @@ class ListFilmsInArrayUseCase
             ];
         }
 
-        return $this->row;
+        return $this->arrayList;
     }
 }
 
