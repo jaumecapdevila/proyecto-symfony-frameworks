@@ -3,10 +3,10 @@
 namespace FilmBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use CacheBundle\EventListener\FilmRemoved;
+use FilmBundle\Entity\Command\RemoveFilmCommand;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class RemoveFilm
+class RemoveFilmUseCase
 {
     private $entityManager;
     /** @var SearchFilmById  */
@@ -23,9 +23,12 @@ class RemoveFilm
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function __invoke($id)
+    public function __invoke(RemoveFilmCommand $removeFilmCommand)
     {
-        $film = call_user_func($this->searchFilmByIdService, $id);
+        $film = call_user_func(
+            $this->searchFilmByIdService,
+            $removeFilmCommand->getFilmIdToRemove()
+        );
         $this->entityManager->remove($film);
         $this->entityManager->flush();
         $this->eventDispatcher->dispatch('film.removed');

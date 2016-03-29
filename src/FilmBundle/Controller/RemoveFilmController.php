@@ -3,23 +3,24 @@
 namespace FilmBundle\Controller;
 
 
-use FilmBundle\Services\RemoveFilm;
+use FilmBundle\Entity\Command\RemoveFilmCommand;
+use FilmBundle\Services\RemoveFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class RemoveFilmController extends Controller
 {
     public function removeAction($id)
     {
+        /** @var RemoveFilmUseCase $removeFilm */
         $removeFilm = $this->get('remove.film');
 
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
+        $response = new JsonResponse();
 
         try {
-            /** @var RemoveFilm $removeFilm */
-            $removeFilm($id);
+            $removeFilmCommand = new RemoveFilmCommand($id);
+            $removeFilm($removeFilmCommand);
             $response->setContent('{"message":"OK"}');
         } catch (Exception $e) {
             $response->setContent('{"message":"Film doesn\'t exist"}');

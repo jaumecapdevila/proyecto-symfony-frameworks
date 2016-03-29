@@ -3,7 +3,8 @@
 namespace FilmBundle\Command;
 
 
-use FilmBundle\Services\RemoveFilm;
+use FilmBundle\Entity\Command\RemoveFilmCommand as CommandRemoveFilm;
+use FilmBundle\Services\RemoveFilmUseCase;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,12 +27,13 @@ class RemoveFilmCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var RemoveFilm $removeFilm */
+        /** @var RemoveFilmUseCase $removeFilm */
         $removeFilm = $this->getContainer()->get('remove.film');
         $id         = $input->getArgument('id');
 
         try {
-            $removeFilm($id);
+            $removeFilmCommand = new CommandRemoveFilm($id);
+            $removeFilm($removeFilmCommand);
             $text = "<fg=green>Film with id = <fg=white>$id</> successfully removed</>";
         } catch (Exception $e) {
             $text = "<fg=red>The film with id = <fg=white>$id</> does not exist</>";
